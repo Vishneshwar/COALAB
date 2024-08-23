@@ -1,25 +1,46 @@
 
 org 100h
 
+num1 db 12h
+num2 db 19h
 
-mov ax, 0b800h 
-mov ds, ax
+start:
+mov al, num1
+add al, num2
 
+mov bl,al
+mov ah,al
+         
+and ah, 0F0h
+shr ah, 4
+add ah, 30h
+cmp ah, 39h 
 
-mov al, 03h  
-mov bl, 05h 
-add al, bl  
+jle print_first   
+add ah, 7
 
+print_first:
 
-add al, 30h  
-                   
+mov dl, ah
+mov ah, 02h
 
-mov ah, 0Eh 
-int 10h      
+int 21h
 
+mov ah, bl
+and ah, 0Fh 
+add ah, 30h
+cmp ah, 39h
+
+jle print_second
+add ah, 7
+
+print_second:
+
+mov dl, ah
+mov ah, 02h 
+int 21h
 
 ret
-
 
 
 
